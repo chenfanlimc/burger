@@ -20,24 +20,19 @@ var orm = {
         })
     },
 
-    updateOne: function(tableInput, colOne, valOne, colTwo, valTwo, id, callback){
-        var queryString = "UPDATE ?? SET ?? = ?, ?? = ? WHERE id = ?";
-        connection.query(queryString, [tableInput, colOne, valOne, colTwo, valTwo, id], function(err, result) {
+    updateOne: function(tableInput, colOne, valOne, id, callback){
+        var queryString = "UPDATE " + tableInput;
+        queryString += " SET " + colOne + "=" + valOne;
+        queryString += " WHERE id=";
+        queryString += id;
+
+        connection.query(queryString, function(err, result) {
             if (err) throw err;
-            console.log(result);
+            console.log(queryString);
             callback(result);
         })
     }
 
-
-  // The last variable cb represents the anonymous function being passed from server.js
-//   selectWhere: function(tableInput, colToSearch, valOfCol, cb) {
-//     var queryString = "SELECT * FROM ?? WHERE ?? = ?";
-//     connection.query(queryString, [tableInput, colToSearch, valOfCol], function(err, result) {
-//       if (err) throw err;
-//       cb(result,err);
-//     });
-//   }
 };
 
 module.exports = orm;
